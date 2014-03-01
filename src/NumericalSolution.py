@@ -840,6 +840,10 @@ class  NS_base:#(HasTraits):
                     self.ar[index].sync()
             if systemStepFailed:
                 break
+            log("Locally Refining Mesh",level=3)
+            for m in self.modelList:
+                elementTagArray = numpy.ones((m.levelModelList[-1].mesh.nElements_global,),'i')
+                m.mlMeshSave.locallyRefine(elementTagArray)
         log("Finished calculating solution",level=3)
         for index,model in enumerate(self.modelList):
             self.finalizeViewSolution(model)
